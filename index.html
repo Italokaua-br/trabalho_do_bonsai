@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METAL GARDEN</title>
+    
+    <link rel="icon" 
+          href="foto_da_logo_sem_fundo.png" 
+          type="image/jpg">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* ====================================
+            Estilos Globais e do Body
+            ==================================== */
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif; /* Fonte limpa e moderna */
+            background-color: #8f8989; /* Fundo original do seu site */
+            color: #050505;
+            line-height: 1.7;
+            overflow-x: hidden; 
+        }
+
+        /* Títulos com fonte elegante */
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif; 
+            font-weight: 700;
+        }
+
+        /* REMOÇÃO DE ELEMENTOS INVISÍVEIS */
+        .leaf-man-container, .particle-container {
+            display: none !important;
+        }
+
+
+        /* ====================================
+            HEADER / NAV
+            ==================================== */
+        header {
+            background-color: #000000; /* Preto sólido */
+            color: #333;
+            padding: 10px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 1.2em;
+            margin: 0;
+            color: #c89b3f; /* DOURADO SUTIL */
+            white-space: nowrap;
+        }
+
+        header p { display: none; } 
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 25px;
+        }
+        nav li {
+            display: inline-block;
+        }
+        
+        .button {
+            letter-spacing: 1px;
+            text-decoration: none;
+            font-size: 0.9em;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            color: #ffffff;
+            padding: 5px 0;
+            position: relative;
+            transition: color 0.3s ease;
+            -webkit-text-stroke: none;
+        }
+        .button:hover {
+            color: #c89b3f; /* DOURADO SUTIL no hover */
+        }
+        .actual-text, .hover-text {
+            -webkit-text-stroke: none !important;
+        }
+        .hover-text { display: none; }
+
+
+        /* ====================================
+            Hero Section (Tela Dividida com Vídeo - CORRIGIDO)
+            ==================================== */
+        .hero-section {
+            width: 100%;
+            height: 100vh; /* Altura total da tela */
+            min-height: 600px;
+            position: relative; 
+            display: grid; 
+            grid-template-columns: 40% 60%; /* Distribuição de 40% (preto) e 60% (vídeo) */
+            color: #fff; 
+            z-index: 1; 
+            overflow: hidden; 
+        }
+
+        /* Painel Preto Esquerdo (Onde o texto fica) */
+        .hero-black-panel {
+            background-color: #000;
+            padding: 150px 80px 40px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: flex-start;
+            text-align: left;
+            z-index: 10; 
+            position: relative;
+            grid-column: 1 / 2; 
+        }
+        
+        .hero-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #c89b3f; /* DOURADO SUTIL */
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .hero-content {
+            z-index: 11;
+            text-align: left;
+            padding: 0; 
+        }
+
+        .hero-content h2 {
+            font-size: 4.5em; 
+            margin-bottom: 20px;
+            text-shadow: none;
+            line-height: 1.1;
+            font-family: 'Playfair Display', serif; 
+            color: #fff;
+        }
+        .hero-content p {
+            font-size: 1.2em;
+            max-width: none;
+            margin: 0;
+            text-shadow: none;
+            color: #ddd; 
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        /* 1. Estiliza o vídeo (60% da direita) */
+        .background-video {
+            position: absolute;
+            top: 0;
+            left: 40%; /* Começa no final do painel preto */
+            width: 60%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1; 
+        }
+
+        /* 2. Cria o OVERLAY ESCURO PADRÃO sobre o VÍDEO */
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 40%; /* Começa no final do painel preto */
+            width: 60%;
+            height: 100%;
+            background-color: #00000099; 
+            z-index: 2; 
+            transition: background-color 0.5s ease;
+        }
+        
+        /* 3. Efeito HOVER (Clareamento apenas da área do VÍDEO) */
+        .hero-section:hover::before {
+            background-color: rgba(0, 0, 0, 0.2); 
+        }
+        
+        /* ====================================
+            ANIMAÇÃO DE REVELAÇÃO (Scrollytelling)
+            ==================================== */
+        .scrolly-element {
+            opacity: 0;
+            transform: translateY(30px); 
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .scrolly-element.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ====================================
+            NOSSOS PILARES (Layout Horizontal)
+            ==================================== */
+            
+        .highlights-section {
+            padding: 80px 40px;
+            text-align: center;
+            background-color: #fff;
+        }
+        .highlights-section h2 {
+            font-size: 3em;
+            color: #c89b3f; 
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        .highlights-section h2::after {
+            content: '';
+            width: 50px;
+            height: 2px;
+            background-color: #c89b3f; 
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .highlight-cards {
+            display: flex; 
+            justify-content: center; 
+            gap: 30px; 
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .highlight-card {
+            flex: 1; 
+            max-width: 350px;
+            min-width: 250px;
+            padding: 30px;
+            background-color: #f4f4f4; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
+            border-radius: 5px; 
+            border-left: none; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight-card i {
+            color: #c89b3f; 
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .highlight-card h3 {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        
+        /* Texto Sobre Empresa */
+        .texto-sobre-empresa {
+            max-width: 800px; 
+            margin: 100px auto; 
+            padding: 50px; 
+            background-color: #f4f4f4; 
+            border-radius: 0; 
+            box-shadow: none; 
+            line-height: 1.8;
+            border-left: 5px solid #c89b3f; 
+        }
+        .texto-sobre-empresa h2 {
+            font-size: 2.8em;
+            color: #c89b3f; 
+            margin-bottom: 30px;
+            border-bottom: none; 
+            padding-bottom: 0;
+            text-align: left; 
+        }
+        
+        /* Produtos section */
+        .produtos-section {
+            background-color: #f9f9f9;
+            padding: 80px 40px;
+            text-align: center;
+        }
+        .produtos-section h2 {
+            color: #050505; 
+            position: relative;
+            padding-bottom: 15px;
+        }
+        .produtos-section h2::after {
+            content: '';
+            width: 50px;
+            height: 2px;
+            background-color: #eeff01; 
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* ====================================
+            ESTILOS DOS VÍDEOS DE PRODUTOS (NOVO)
+            ==================================== */
+        .video-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 40px auto; 
+            flex-wrap: wrap; 
+        }
+
+        .video-card {
+            flex: 1; 
+            min-width: 300px;
+            max-width: 350px;
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+            border-radius: 5px; 
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 3px solid #c89b3f; /* CORRIGIDO: Dourado (c89b3f) para harmonizar com a home */
+            cursor: pointer;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .video-card video {
+            width: 100%;
+            height: 300px; 
+            object-fit: cover;
+            display: block;
+        }
+
+        .video-info {
+            padding: 20px;
+            text-align: left;
+        }
+
+        .video-info h3 {
+            font-size: 1.5em;
+            color: #050505;
+            margin-bottom: 5px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .video-info p {
+            font-size: 1em;
+            color: #666;
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Services section */
+        .services-section {
+             padding: 80px 40px;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .services-section h2 {
+            color: #c89b3f; 
+            position: relative;
+            padding-bottom: 15px;
+        }
+        .service-card:hover {
+            border-bottom: 1px solid #c89b3f; 
+        }
+        .service-card h3 {
+            color: #c89b3f; 
+        }
+
+        /* ====================================
+        Estilos do Blog (News - Carrossel CORRIGIDO)
+        ==================================== */
+
+        .blog-section {
+            padding: 80px 0; 
+            background-color: #fff;
+            text-align: center;
+            position: relative; 
+        }
+
+        .blog-header-container {
+            text-align: left; 
+            margin-bottom: 50px;
+            padding-left: 10%; 
+            position: relative;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="%23f7f7f7"/><path d="M50 0L100 50L50 100L0 50Z" fill="%23e8e8e8" opacity="0.5"/></svg>') repeat;
+        }
+
+        .blog-header-container h2 {
+            font-size: 3.5em; 
+            color: #333;
+            display: inline-block;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            z-index: 2;
+            font-family: 'Playfair Display', serif;
+            text-transform: uppercase;
+        }
+
+        .blog-header-container h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #c89b3f; 
+        }
+
+        /* ROLAGEM HORIZONTAL (CARROSSEL) */
+        .blog-carousel-wrapper {
+            position: relative; 
+            max-width: 1280px; 
+            margin: 0 auto;
+            padding: 0 40px; 
+        }
+
+        .blog-carousel-container {
+            display: flex;
+            overflow-x: scroll; 
+            scroll-snap-type: x mandatory; 
+            -ms-overflow-style: none; 
+            scrollbar-width: none; 
+            padding-bottom: 20px; 
+            -webkit-overflow-scrolling: touch; 
+        }
+
+        .blog-carousel-container::-webkit-scrollbar {
+            display: none; 
+        }
+
+        .blog-card {
+            flex: 0 0 350px; 
+            margin-right: 30px; 
+            scroll-snap-align: start; 
+            background-color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 0;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        /* Estilos de Conteúdo do Card do Blog (mantidos) */
+        .blog-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .blog-content {
+            padding: 20px;
+        }
+
+        .blog-date {
+            font-size: 0.8em;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .blog-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4em;
+            color: #000;
+            line-height: 1.3;
+            margin: 0 0 10px 0;
+            border-bottom: 2px solid #c89b3f; 
+            padding-bottom: 5px;
+        }
+
+        .blog-summary {
+            font-size: 0.95em;
+            color: #555;
+            margin-top: 15px;
+        }
+
+
+        /* ESTILOS DOS BOTÕES DE NAVEGAÇÃO */
+        .carousel-nav-button {
+            position: absolute;
+            top: 50%; 
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.7); 
+            color: #fff;
+            border: none;
+            padding: 15px 10px;
+            cursor: pointer;
+            font-size: 1.5em;
+            z-index: 10;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-nav-button:hover {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .carousel-nav-button.prev {
+            left: 0;
+        }
+
+        .carousel-nav-button.next {
+            right: 0;
+        }
+
+        /* ====================================
+            Footer (Rodapé)
+            ==================================== */
+        footer {
+            background-color: #000000; 
+            color: #ffffff; 
+            padding: 60px 40px; 
+            text-align: left; 
+            font-size: 0.95em;
+        }
+
+        footer .footer-content {
+            display: flex;
+            flex-wrap: wrap; 
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 30px; 
+        }
+
+        footer .footer-col {
+            flex: 1; 
+            min-width: 250px; 
+            margin-bottom: 20px; 
+        }
+
+        footer .footer-col h3 {
+            color: #c89b3f; 
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        footer .footer-col p {
+            margin-bottom: 10px;
+            color: #cccccc; 
+        }
+
+        footer .footer-col ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        footer .footer-col ul li a {
+            color: #cccccc; 
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer .footer-col ul li a:hover {
+            color: #ffffff; 
+        }
+
+        footer .social-icons a {
+            color: #c89b3f; 
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #333333; 
+            color: #888888; 
+            font-size: 0.85em;
+        }
+
+
+        /* ====================================
+            Responsividade Geral (Corrigida)
+            ==================================== */
+        @media (max-width: 992px) {
+            .hero-section {
+                grid-template-columns: 100%; 
+                height: 70vh;
+            }
+            .hero-black-panel {
+                grid-column: 1 / -1; 
+                padding: 100px 40px 40px 40px;
+            }
+            .background-video {
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 0;
+            }
+            .hero-section::before {
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 0;
+                background-color: rgba(0, 0, 0, 0.7); 
+            }
+
+            /* Responsividade para a seção Pilares */
+            .highlight-cards {
+                flex-direction: column; 
+                gap: 20px;
+            }
+            .highlight-card {
+                max-width: 90%;
+                margin: 0 auto;
+            }
+        }
+        @media (max-width: 768px) {
+            
+            /* Responsividade Específica para o Carrossel (News) */
+            .carousel-nav-button {
+                display: none; 
+            }
+            .blog-carousel-wrapper {
+                padding: 0 10px; 
+            }
+            .blog-card {
+                flex: 0 0 85vw; 
+                margin-right: 20px;
+            }
+
+        }
+
+    </style>
+</head>
+<body>
+    
+    <header>
+        <h1>METAL GARDEN</h1>
+        <nav>
+            <ul>
+                <li>
+                    <a class="button" href="produtos.html">
+                        <span class="actual-text">Produtos</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="button" href="#blog">
+                        <span class="actual-text">Blog</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="button" href="#servicos">
+                        <span class="actual-text">Serviços</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="button" href="#sobre">
+                        <span class="actual-text">Conheça-nos</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="button" href="https://landbot.online/v3/H-3254167-FR7357CQ6I84TG3X/index.html" target="_blank">
+                        <span class="actual-text">Contato</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    
+    
+    <section class="hero-section">
+        
+        <div class="hero-black-panel">
+            <p class="hero-subtitle">ARTE E METALURGIA JAPONESA</p>
+            <div class="hero-content">
+                <h2>BONSAIS DE COBRE</h2> 
+                <p>UNIÃO DA CULTURA JAPONESA COM O FUTURO</p>
+            </div>
+        </div>
+        
+        <video autoplay muted loop playsinline class="background-video">
+            <source src="video_de_demonstracao.webm" type="video/mp4"> 
+            Seu navegador não suporta a tag de vídeo.
+        </video>
+        
+    </section>
+
+    <section class="highlights-section">
+        <h2 class="scrolly-element">Nossos Pilares</h2> 
+        <div class="highlight-cards">
+            <div class="highlight-card scrolly-element">
+                <i class="fas fa-tree"></i>
+                <h3>Sustentabilidade</h3>
+                <p>Compromisso com o impacto ambiental positivo em todos os nossos projetos.</p>
+            </div>
+            <div class="highlight-card scrolly-element">
+                <i class="fas fa-flask"></i>
+                <h3>Inovação Técnica</h3>
+                <p>Uso de tecnologia de ponta e soluções criativas para desafios complexos.</p>
+            </div>
+            <div class="highlight-card scrolly-element">
+                <i class="fas fa-hammer"></i>
+                <h3>5 Anos de Experiência</h3>
+                <p>Experiência consolidada e milhares de serviços prestados em 350 municípios.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="texto-sobre-empresa scrolly-element" id="sobre">
+        <h2>Quem Somos e Nossa Missão</h2>
+        <p>
+            A METAL GARDEN é a pioneira na criação e comercialização de Bonsai de Cobre no Brasil, redefinindo a arte milenar japonesa através da inovação e da estética contemporânea.
+        </p>
+        <P>
+            Nascida da paixão por unir a tradição contemplativa do Bonsai com a durabilidade e o brilho futurista do metal, nossa empresa se dedica a transformar a decoração e o paisagismo. Temos em nosso acervo centenas de obras de arte em cobre, que adornam lares e escritórios de colecionadores e entusiastas em diversos estados.
+        </P>
+        <p>
+            Contamos com uma equipe de artesãos, designers e metalúrgicos talentosos, multidisciplinares e altamente qualificados. Nosso foco é na criação de esculturas metálicas vivas que transcendem o tempo, oferecendo peças que são:
+        </p>
+        <P>
+            Eternas: Diferentemente das plantas naturais, nossos bonsais de cobre não exigem manutenção e resistem ao tempo. Sustentáveis: Utilizamos metal (cobre e ligas) de forma consciente e duradoura. Únicas: Cada peça é meticulosamente modelada, apresentando um design exclusivo que evoca o futuro.
+        </P>
+    </section>
+
+    <section class="produtos-section" id="produtos">
+        <h2 class="scrolly-element">Produção e Exemplificação</h2>
+        
+        <div class="video-container">
+            <div class="video-card scrolly-element">
+                <video autoplay muted loop playsinline src="video_de_produção.mp4" type="video/mp4">
+                    Seu navegador não suporta a tag de vídeo.
+                </video>
+                <div class="video-info">
+                    <h3>Bonsai Clássico</h3>
+                    <p>Oração em Cobre. Tamanho M. Peça única e artesanal.</p>
+                </div>
+            </div>
+            
+
+
+
+
+                <div class="video-container">
+            <div class="video-card scrolly-element">
+                <video autoplay muted loop playsinline src="video_fazendo.mp4" type="video/mp4">
+                    Seu navegador não suporta a tag de vídeo.
+                </video>
+                <div class="video-info">
+                    <h3>Bonsai Pequeno</h3>
+                    <p>Demonstração da produção.</p>
+                </div>
+            </div>
+
+
+
+
+
+            
+
+
+
+
+
+
+
+            
+
+
+            <div class="video-card scrolly-element">
+                <video autoplay muted loop playsinline src="video_sopphing.mp4" type="video/mp4">
+                    Seu navegador não suporta a tag de vídeo.
+                </video>
+                <div class="video-info">
+                    <h3>Estilo Kengai</h3>
+                    <p>Cascata de Níquel. Edição Limitada. Design Japonês.</p>
+                </div>
+            </div>
+            
+            <div class="video-card scrolly-element">
+                <video autoplay muted loop playsinline src="video_da_arvore.mp4" type="video/mp4">
+                    Seu navegador não suporta a tag de vídeo.
+                </video>
+                <div class="video-info">
+                    <h3>Árvore da Vida</h3>
+                    <p>Design Exclusivo. Cobre oxidado e polido. Coleção 2026.</p>
+                </div>
+            </div>
+        </div>
+        </section>
+
+    <section class="services-section" id="servicos">
+        <h2 class="scrolly-element">Serviços Oferecidos</h2>
+        <div class="highlight-cards">
+            <div class="highlight-card service-card scrolly-element">
+                <i class="fas fa-cut"></i>
+                <h3>Modelagem Sob Medida</h3>
+                <p>Criamos bonsais e esculturas de metal personalizadas para seu ambiente.</p>
+            </div>
+            <div class="highlight-card service-card scrolly-element">
+                <i class="fas fa-cog"></i>
+                <h3>Manutenção e Polimento</h3>
+                <p>Serviços especializados para restaurar o brilho e a forma de suas peças.</p>
+            </div>
+            <div class="highlight-card service-card scrolly-element">
+                <i class="fas fa-recycle"></i>
+                <h3>Reciclagem de Metal</h3>
+                <p>Trabalhamos com metais reciclados, reforçando nosso compromisso sustentável.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="blog-section" id="blog">
+        <div class="blog-header-container scrolly-element">
+            <h2>Noticias</h2>
+        </div>
+        <div class="blog-carousel-wrapper">
+            <button class="carousel-nav-button prev" aria-label="Notícia anterior"><i class="fas fa-chevron-left"></i></button>
+            <div class="blog-carousel-container">
+                <div class="blog-card scrolly-element">
+                    <img src="https://ideiasnamala.com/wp-content/uploads/2024/06/Asakusa-3.jpg" alt="Foto da Postagem 1">
+                    <div class="blog-content">
+                        <p class="blog-date">27 NOVEMBRO 2025</p>
+                        <h3 class="blog-title">Templo Asakusa em Tokyo se empreciona com os novos bonsais</h3>
+                        <p class="blog-summary">O templo Asakusa em Tóquio afirma que essa nova cultura de Bonsais de cobre fortalece mais ainda as raizes japonesas.</p>
+                    </div>
+                </div>
+                <div class="blog-card scrolly-element">
+                    <img src="https://s2-valor.glbimg.com/Pqj_xGEDZitzzWU80sQkJ-4pu44=/0x0:5500x3674/888x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_63b422c2caee4269b8b34177e8876b93/internal_photos/bs/2025/t/E/k5rDtEQNKb79pHTHS5QA/takaishi.jpg" alt="Foto da Postagem 2">
+                    <div class="blog-content">
+                        <p class="blog-date">20 NOVEMBRO 2025</p>
+                        <h3 class="blog-title">Sanae Takaishi da palestra no centro principal da METAL GARDEN</h3>
+                        <p class="blog-summary">Sanae Takaishi brincou dizendo que o nome da empresa é estranho, entretanto afirmou que adorou essa união entre a tradição e o futuro.</p>
+                    </div>
+                </div>
+                <div class="blog-card scrolly-element">
+                    <img src="chama_murilo.png" alt="Foto da Postagem 3">
+                    <div class="blog-content">
+                        <p class="blog-date">10 NOVEMBRO 2025</p>
+                        <h3 class="blog-title">Novo polo de reciclagem em Monte Mor </h3>
+                        <p class="blog-summary">METAL GARDEN inaugura seu novo polo de reciclagem na cidade de Monte Mor.</p>
+                    </div>
+                </div>
+                <div class="blog-card scrolly-element">
+                    <img src="https://www.indaiatuba.sp.gov.br/comunicacao/imprensa/noticias/mini_figdr.custodio.jpg" alt="Foto da Postagem 4">
+                    <div class="blog-content">
+                        <p class="blog-date">1 NOVEMBRO 2025</p>
+                        <h3 class="blog-title">Nova parceria com a prefeitura de Indaiatuba</h3>
+                        <p class="blog-summary"> METAL GARDEN se une a prefeitura de Indaiatuba para revitalizar o centro principal da cidade.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-nav-button next" aria-label="Próxima notícia"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>METAL GARDEN</h3>
+                <p>Arte e Metalurgia Japonesa. O futuro do Bonsai.</p>
+                <p>&copy; 2025 METAL GARDEN. Todos os direitos reservados.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Navegação</h3>
+                <ul>
+                    <li><a href="produtos.html">Produtos</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#servicos">Serviços</a></li>
+                    <li><a href="#sobre">Conheça-nos</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contato</h3>
+                <p>Email: contato@metalgarden.com.br</p>
+                <p>Telefone: (19) 98888-7777</p>
+                <div class="social-icons">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram fa-lg"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook fa-lg"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin fa-lg"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>Desenvolvido com Paixão e Cobre.</span>
+        </div>
+    </footer>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            
+            // ===================================
+            // Lógica de Animação de Scroll (Scrollytelling)
+            // ===================================
+            function checkScroll() {
+                $('.scrolly-element').each(function() {
+                    var el = this;
+                    // Aumenta a visibilidade para 90% para iniciar a animação mais cedo
+                    if (el.getBoundingClientRect().top < (window.innerHeight * 0.9) && !$(el).hasClass('is-visible')) {
+                        $(el).addClass('is-visible');
+                    }
+                });
+            }
+
+            $(window).on('scroll', checkScroll);
+            checkScroll(); 
+            
+            // ====================================
+            // REMOÇÃO DA LÓGICA DO BONECO DE FOLHA E ANIMAÇÃO DE DIGITAÇÃO
+            // ====================================
+
+            // Lógica de Scroll Suave para o menu
+            $('a[href*="#"]').not('[href="#"]').not('[href="#0"]').click(function(event) {
+                if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') 
+                    || location.hostname == this.hostname) {
+                    var target = $(this.hash);
+                    target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                    if (target.length) {
+                        event.preventDefault();
+                        $('html, body').animate({
+                            scrollTop: target.offset().top - 60 // Ajuste para a altura do header fixo
+                        }, 800);
+                    }
+                }
+            });
+            
+            // ====================================
+            // Lógica dos Botões de Navegação do Carrossel (Notícias)
+            // ====================================
+            const carouselContainer = $('.blog-carousel-container');
+            // Largura do card (350px) + margin-right (30px) + margem de segurança
+            const scrollAmount = 380; 
+
+            $('.carousel-nav-button.prev').click(function() {
+                carouselContainer.animate({
+                    scrollLeft: carouselContainer.scrollLeft() - scrollAmount
+                }, 500); 
+            });
+
+            $('.carousel-nav-button.next').click(function() {
+                carouselContainer.animate({
+                    scrollLeft: carouselContainer.scrollLeft() + scrollAmount
+                }, 500); 
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECOLAX - Sua Solução Ecológica</title>
+    
+    <link rel="icon" 
+          href="https://png.pngtree.com/png-clipart/20210711/original/pngtree-green-leaf-design-transparent-background-png-image_6515801.jpg" 
+          type="image/jpg">
+    
+    <link rel="stylesheet" href="estilos.css"> 
+
+    <style>
+        /* ====================================
+            Estilos Globais e do Body
+            ==================================== */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; 
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* ====================================
+            Estilos do Header e Títulos
+            ==================================== */
+        header {
+            background-color: #222; 
+            color: #fff;
+            padding-bottom: 20px;
+            
+            display: flex;
+            flex-direction: column; 
+            align-items: center; 
+            position: relative; 
+            
+            padding-left: 180px; 
+            min-height: 140px; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para destacar o header */
+        }
+
+        header h1 {
+            margin-top: 0;
+            padding-top: 20px;
+            font-size: 3.5em; 
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Sombra no texto do título */
+        }
+        header p {
+            font-size: 1.5em; 
+            margin-bottom: 0;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Sombra no texto do subtítulo */
+        }
+
+        /* ====================================
+            LOGO SVG ANIMADO 
+            ==================================== */
+        .folhas-container-wrapper {
+            position: absolute;
+            left: 20px; 
+            top: 50%;
+            transform: translateY(-50%);
+            width: 140px; 
+            height: 140px; 
+            z-index: 10;
+        }
+
+        .folhas {
+            width: 100%; 
+            height: 100%;
+            animation: ventoGeral 6s ease-in-out infinite;
+        }
+        
+        .folhas svg {
+            overflow: visible; 
+        }
+        
+        #folha-esq, #folha-centro, #folha-dir {
+            transform-origin: 50% 100%; 
+            animation: ventoFolha 3s ease-in-out infinite alternate;
+        }
+
+        #folha-esq { animation-delay: 0s; }
+        #folha-centro { animation-delay: 0.3s; }
+        #folha-dir { animation-delay: 0.6s; }
+
+        @keyframes ventoFolha {
+            0% { transform: rotate(0deg) translateX(0px); }
+            50% { transform: rotate(2deg) translateX(2px); }
+            100% { transform: rotate(0deg) translateX(0px); }
+        }
+
+        @keyframes ventoGeral {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(2px); }
+        }
+        
+        /* ====================================
+            Estilos para a Navegação (Menu)
+            ==================================== */
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            padding: 10px 0;
+        }
+        nav li {
+            display: inline-block;
+        }
+        /* Estilos de Botão */
+        .button {
+            --border-right: 6px;
+            --text-stroke-color: rgba(255, 255, 255, 0.6);
+            --animation-color: #37FF8B;
+            --fs-size: 1.5em;
+            letter-spacing: 3px;
+            text-decoration: none;
+            font-size: var(--fs-size);
+            font-family: "Arial", sans-serif;
+            position: relative;
+            text-transform: uppercase;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--animation-color); 
+            border: none;
+            cursor: pointer;
+            height: auto;
+            background: transparent;
+            margin: 0;
+            padding: 0;
+            display: inline-block; 
+            transition: -webkit-text-stroke-color 0.3s ease; 
+        }
+        .button .actual-text {
+            -webkit-text-stroke: 1px var(--text-stroke-color);
+        }
+
+        .hover-text {
+            position: absolute;
+            box-sizing: border-box;
+            color: var(--animation-color);
+            width: 0%;
+            inset: 0;
+            border-right: var(--border-right) solid var(--animation-color);
+            overflow: hidden;
+            transition: 0.5s;
+            -webkit-text-stroke: 1px var(--animation-color);
+        }
+
+        .button:hover .hover-text {
+            width: 100%;
+            filter: drop-shadow(0 0 23px var(--animation-color));
+        }
+
+        /* ====================================
+            Hero Section / Banner Principal
+            ==================================== */
+        .hero-section {
+            width: 100%;
+            height: 450px; /* Altura do banner */
+            background-image: url('https://images.unsplash.com/photo-1542601098-8fc112d09902?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); /* Imagem de fundo verde/natural */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+            box-shadow: inset 0 -5px 10px rgba(0, 0, 0, 0.2); /* Sombra interna na parte inferior */
+        }
+        .hero-content h2 {
+            font-size: 3.8em;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+        }
+        .hero-content p {
+            font-size: 1.8em;
+            max-width: 800px;
+            margin: 0 auto;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ====================================
+            Seção de Círculos com Imagens (Destaques)
+            ==================================== */
+        .circles-section {
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            flex-wrap: wrap; 
+            margin-top: 50px; 
+            padding: 20px;
+            gap: 40px; 
+        }
+
+        .circle-container {
+            width: 200px; 
+            height: 200px; 
+            border-radius: 50%; 
+            background-color: #fff; 
+            border: 5px solid #37FF8B; 
+            overflow: hidden; 
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+            transition: transform 0.3s ease-in-out; 
+            position: relative; /* Para a legenda */
+        }
+
+        .circle-container:hover {
+            transform: scale(1.10); 
+            border-color: #28a745; 
+        }
+
+        .circle-container img {
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            border-radius: 50%; 
+        }
+        
+        .circle-caption {
+            position: absolute;
+            bottom: -30px; /* Posição abaixo do círculo */
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 1.1em;
+            color: #555;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .circle-container:hover .circle-caption {
+            color: #28a745; /* Mudar cor da legenda ao hover */
+        }
+
+
+        /* ====================================
+            Estilo para a Seção de Texto da Empresa (Quem Somos)
+            ==================================== */
+        .texto-sobre-empresa {
+            max-width: 900px; /* Ligeiramente mais largo */
+            margin: 80px auto; /* Mais espaço */
+            padding: 30px; /* Mais padding */
+            background-color: #fff; 
+            border-radius: 10px; /* Borda mais arredondada */
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08); 
+            line-height: 1.8; /* Melhor legibilidade */
+        }
+        .texto-sobre-empresa h2 {
+            text-align: center;
+            color: #28a745; /* Título verde */
+            font-size: 2.2em;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #37FF8B; /* Linha de destaque */
+            padding-bottom: 10px;
+        }
+        .texto-sobre-empresa p {
+            margin-bottom: 15px;
+            text-align: justify; /* Justifica o texto */
+            font-size: 1.15em; 
+            color: #444;
+        }
+
+        /* ====================================
+            Seção de Serviços/Diferenciais (Cards)
+            ==================================== */
+        .services-section {
+            padding: 60px 20px;
+            background-color: #e9f5e4; /* Fundo suave */
+            text-align: center;
+        }
+        .services-section h2 {
+            font-size: 2.8em;
+            color: #28a745;
+            margin-bottom: 50px;
+            border-bottom: 2px solid #37FF8B;
+            padding-bottom: 15px;
+            display: inline-block; /* Para a borda pegar só o texto */
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .service-card {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        .service-card img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+        }
+        .service-card h3 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .service-card p {
+            font-size: 1.1em;
+            color: #666;
+        }
+
+        /* ====================================
+            Rodapé
+            ==================================== */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 80px;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3); /* Sombra para o rodapé */
+        }
+        footer .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            text-align: left;
+            gap: 30px;
+        }
+        footer .footer-col {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+        footer .footer-col h3 {
+            color: #37FF8B;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #555;
+            padding-bottom: 10px;
+        }
+        footer .footer-col p, footer .footer-col ul {
+            font-size: 1em;
+            color: #ccc;
+            list-style: none;
+            padding: 0;
+        }
+        footer .footer-col ul li {
+            margin-bottom: 8px;
+        }
+        footer .footer-col ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        footer .footer-col ul li a:hover {
+            color: #37FF8B;
+        }
+        footer .social-icons a {
+            color: #fff;
+            font-size: 1.8em;
+            margin-right: 15px;
+            transition: color 0.3s ease;
+        }
+        footer .social-icons a:hover {
+            color: #37FF8B;
+        }
+        footer .footer-bottom {
+            margin-top: 30px;
+            border-top: 1px solid #444;
+            padding-top: 20px;
+            font-size: 0.9em;
+            color: #999;
+        }
+
+
+        /* ====================================
+            Responsividade Geral
+            ==================================== */
+        @media (max-width: 1024px) {
+            header h1 {
+                font-size: 3em;
+            }
+            header p {
+                font-size: 1.3em;
+            }
+            .hero-content h2 {
+                font-size: 3em;
+            }
+            .hero-content p {
+                font-size: 1.5em;
+            }
+            .texto-sobre-empresa {
+                margin: 60px auto;
+            }
+            .services-section h2 {
+                font-size: 2.4em;
+            }
+            .services-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding-left: 0; 
+                flex-direction: column; 
+                min-height: auto; /* Deixa a altura se ajustar ao conteúdo */
+            }
+            .folhas-container-wrapper {
+                position: static; 
+                transform: none;
+                margin: 10px auto 0; 
+            }
+            nav ul {
+                flex-direction: column; 
+                gap: 10px;
+                margin-top: 15px;
+            }
+            header h1 {
+                font-size: 2.5em;
+                padding-top: 10px;
+            }
+            header p {
+                font-size: 1.1em;
+            }
+            .hero-section {
+                height: 350px;
+            }
+            .hero-content h2 {
+                font-size: 2.5em;
+            }
+            .hero-content p {
+                font-size: 1.2em;
+            }
+            .circles-section {
+                flex-direction: column; 
+                gap: 30px;
+            }
+            .circle-container {
+                width: 180px;
+                height: 180px;
+            }
+            .texto-sobre-empresa {
+                margin: 40px 15px;
+                padding: 20px;
+            }
+            .texto-sobre-empresa h2 {
+                font-size: 2em;
+            }
+            .texto-sobre-empresa p {
+                font-size: 1em;
+            }
+            .services-section {
+                padding: 40px 15px;
+            }
+            .services-section h2 {
+                font-size: 2em;
+            }
+            footer .footer-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            footer .footer-col {
+                min-width: unset;
+                width: 100%;
+            }
+            footer .social-icons {
+                margin-top: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 2em;
+            }
+            header p {
+                font-size: 1em;
+            }
+            .hero-section {
+                height: 250px;
+            }
+            .hero-content h2 {
+                font-size: 2em;
+            }
+            .hero-content p {
+                font-size: 1em;
+            }
+            .circle-container {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        
+        <div class="folhas-container-wrapper">
+             <div class="folhas">
+                <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                    <g fill="#2eb62c">
+                        <path id="folha-esq" d="M190 300C150 250 100 230 50 240C120 180 230 210 260 280C240 310 210 320 190 300Z"/>
+                        <path id="folha-dir" d="M320 300C360 250 410 230 460 240C390 180 280 210 250 280C270 310 300 320 320 300Z"/>
+                        <path id="folha-centro" d="M255 290C255 200 280 150 310 120C260 130 210 180 210 270C220 290 240 310 255 290Z"/>
+                    </g>
+                </svg>
+            </div>
+        </div>
+
+        <nav>
+            <ul>
+                <li>
+                    <a class="button" href="home.html" data-text="Home">
+                        <span class="actual-text">&nbsp;Home&nbsp;</span>
+                        <span aria-hidden="true" class="hover-text">&nbsp;Home&nbsp;</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="button" href="products.html" data-text="Products">
+                        <span class="actual-text">&nbsp;Products&nbsp;</span>
+                        <span aria-hidden="true" class="hover-text">&nbsp;Products&nbsp;</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="button" href="about.html" data-text="About Us">
+                        <span class="actual-text">About Us</span>
+                        <span aria-hidden="true" class="hover-text">About Us</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="button" href="contact.html" data-text="Contact">
+                        <span class="actual-text">Contact</span>
+                        <span aria-hidden="true" class="hover-text">Contact</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <h1>Bem-vindo à ECOLAX</h1>
+        <p>Sua solução completa para produtos ecológicos.</p>
+    </header>
+    
+    <section class="hero-section">
+        <div class="hero-content">
+            <h2>Engenharia e Geotecnia Ambiental</h2>
+            <p>Soluções inovadoras e sustentáveis para o futuro do seu negócio e do planeta.</p>
+        </div>
+    </section>
+
+    <section class="circles-section">
+        <div class="circle-container">
+            <img src="https://th.bing.com/th/id/OIP.lnXBw8cUHbuWdI5rb6KzGwHaHa?w=211&h=211&c=7&r=0&o=7&cb=12&pid=1.7&rm=3" alt="Produto Ecológico 1">
+            <span class="circle-caption">Filamentos PLA</span>
+        </div>
+        <div class="circle-container">
+            <img src="https://fesmo.com.br/wp-content/uploads/2023/09/Conheca-os-tipos-de-materiais-de-filamento-para-impressao-3D-980x696.jpg" alt="Produto Ecológico 2">
+            <span class="circle-caption">Impressão 3D Ecológica</span>
+        </div>
+        <div class="circle-container">
+            <img src="https://th.bing.com/th/id/OIP.L3iVwsNp9mlKT0BEdECfFQHaHF?w=197&h=189&c=7&r=0&o=7&cb=12&pid=1.7&rm=3" alt="Produto Ecológico 3">
+            <span class="circle-caption">Reciclagem Plástica</span>
+        </div>
+    </section>
+
+    <section class="texto-sobre-empresa">
+        <h2>Quem Somos</h2>
+        <p>
+            A ECOLAX É UMA EMPRESA DE ENGENHARIA E GEOTECNIA AMBIENTAL, COM 20 ANOS NO MERCADO TEM EM SEU CURRÍCULO MILHARES DE SERVIÇOS PRESTADOS EM MAIS DE 350 MUNICÍPIOS DO ESTADO DE SÃO PAULO, PARA EMPRESAS DE VÁRIOS SETORES DA ECONOMIA.
+            POSSUI UMA EQUIPE TÉCNICA EXPERIENTE, MULTIDISCIPLINAR E QUALIFICADA PARA APRESENTAR SOLUÇÕES NA MEDIDA DA DEMANDA DA SUA EMPRESA.
+        </p>
+        <p>
+            Nosso compromisso é com a inovação e a sustentabilidade, oferecendo soluções que não apenas atendem às necessidades regulatórias e operacionais, mas também promovem um impacto positivo no meio ambiente. Trabalhamos lado a lado com nossos clientes para desenvolver projetos que aliam eficiência, economia e responsabilidade ambiental, garantindo um futuro mais verde para todos.
+        </p>
+    </section>
+
+    <section class="services-section">
+        <h2>Nossos Serviços</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <img src="https://www.svgrepo.com/show/472691/plant-based.svg" alt="Engenharia Ambiental">
+                <h3>Engenharia Ambiental</h3>
+                <p>Projetos e consultoria para licenciamento, gestão de resíduos e remediação de áreas contaminadas.</p>
+            </div>
+            <div class="service-card">
+                <img src="https://www.svgrepo.com/show/472688/ecology.svg" alt="Geotecnia">
+                <h3>Geotecnia Ambiental</h3>
+                <p>Estudos de solo e subsolo, laudos geotécnicos e soluções para estabilidade e contenção.</p>
+            </div>
+            <div class="service-card">
+                <img src="https://www.svgrepo.com/show/472690/eco-friendly.svg" alt="Recursos Hídricos">
+                <h3>Recursos Hídricos</h3>
+                <p>Gestão de águas superficiais e subterrâneas, outorgas e projetos de reuso e tratamento.</p>
+            </div>
+            <div class="service-card">
+                <img src="https://www.svgrepo.com/show/472693/leaf-icon.svg" alt="Energias Renováveis">
+                <h3>Energias Renováveis</h3>
+                <p>Consultoria e desenvolvimento de projetos de energia solar, eólica e biomassa.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>ECOLAX</h3>
+                <p>Inovação e Sustentabilidade para um Futuro Verde.</p>
+                <div class="social-icons">
+                    <a href="#" target="_blank">F</a> <a href="#" target="_blank">I</a> <a href="#" target="_blank">L</a> </div>
+            </div>
+            <div class="footer-col">
+                <h3>Links Úteis</h3>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="products.html">Produtos</a></li>
+                    <li><a href="about.html">Sobre Nós</a></li>
+                    <li><a href="contact.html">Contato</a></li>
+                    <li><a href="#">Política de Privacidade</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contato</h3>
+                <p>Email: contato@ecolax.com.br</p>
+                <p>Telefone: (11) 98765-4321</p>
+                <p>Endereço: Rua da Sustentabilidade, 123 - Cidade Verde - SP</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2023 ECOLAX. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+            crossorigin="anonymous"></script> 
+    </body>
+</html>
